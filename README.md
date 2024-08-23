@@ -38,11 +38,8 @@ Este projeto é uma API desenvolvida com o framework Gin para Go. A estrutura do
 │ │ └── user_repository_pgsql.go
 │ ├── services
 │ │ └── user.go
-│ ├── setup
-│ │ └── data_loader.go
 │ └── types
 │ └── error.go
-├── data.csv
 ├── docker-compose.yml
 ├── go.mod
 ├── go.sum

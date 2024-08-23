@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:14.0
+    environment:
+      POSTGRES_USER: usertest
+      POSTGRES_PASSWORD: clients123
+      POSTGRES_DB: clients
+    ports:
+      - "5432:5432"
+    networks:
+      - clients_network
+    healthcheck:
+      test: ["CMD", "pg_isready", '-U', 'usertest', '-d', 'clients']
+      interval: 10s
+      retries: 5
+      start_period: 30s
+      timeout: 5s
+  api:
+    build: .
+    env_file:
+      - .env
+    ports:
+      - "8080:8080"
+    volumes:
+            - .:/usr/src/app
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - clients_network
+  
+networks:
+  clients_network:
+    driver: bridge
